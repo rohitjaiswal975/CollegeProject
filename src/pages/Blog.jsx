@@ -46,6 +46,11 @@ const Blog = () => {
         <img src={data.image} alt="" className="rounded-3xl mb-5" />
 
         <div className="rich-text max-w-3xl mx-auto" dangerouslySetInnerHTML={{ __html: data.description }}></div>
+
+        {/* Comments Section */}
+        <div className="mt-14 mb-10 max-w-3xl mx-auto">
+            <p>Comments:</p>
+        </div>
       </div>
     </div>
   ) : (
