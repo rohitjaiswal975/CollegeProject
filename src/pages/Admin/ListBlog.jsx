@@ -2,7 +2,7 @@
 const ListBlog = () => {
   return (
     <div>
-      
+      listblog
     </div>
   )
 }

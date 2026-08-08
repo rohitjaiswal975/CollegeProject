@@ -139,7 +139,7 @@ const Footer = () => {
         </div>
 
         {/* Copyright */}
-        <div className="border-t border-gray-300 mt-10 pt-6">
+        <div className="border-t border-black mt-10 pt-6">
           <p className="text-center text-sm text-gray-500">
             © 2026 QuickBlog. All Rights Reserved.
           </p>
