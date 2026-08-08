@@ -10,6 +10,7 @@ import {
   FaInstagram,
 } from "react-icons/fa";
 import Footer from "../components/Footer";
+import Loading from "../components/Loading";
 
 const Blog = () => {
   const { id } = useParams();
@@ -177,7 +178,9 @@ const Blog = () => {
       <Footer />
     </div>
   ) : (
-    <div>Loading</div>
+    <div>
+      <Loading />
+    </div>
   );
 };
 
