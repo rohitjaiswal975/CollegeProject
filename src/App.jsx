@@ -5,6 +5,7 @@ import Layout from "./pages/Admin/Layout";
 import Dashboard from "./pages/Admin/Dashboard";
 import AddBlog from "./pages/Admin/AddBlog";
 import ListBlog from "./pages/Admin/ListBlog";
+import Comment from "./pages/Admin/Comment";
 
 const App = () => {
   return (
