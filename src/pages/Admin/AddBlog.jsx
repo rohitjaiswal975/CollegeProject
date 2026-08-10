@@ -63,7 +63,7 @@ const AddBlog = () => {
           placeholder="Type Here"
           required
           value={subTiltle}
-          onChange={(e) => subTiltle(e.target.value)}
+          onChange={(e) => setSubTitle(e.target.value)}
           className="w-full max-w-lg mt-2 p-2 border border-gray-400 outline-none rounded"
         />
         {/* Blog Description */}
