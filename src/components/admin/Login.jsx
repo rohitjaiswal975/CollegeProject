@@ -1,10 +1,72 @@
+import { useState } from "react";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Login = () => {
-  return (
-    <div>
-      login
-    </div>
-  )
-}
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
-export default Login
+  const handleSubmit = () => {
+    console.log({ email, password });
+  };
+
+  return (
+    <div className="flex items-center justify-center h-screen">
+      <div className="w-full max-w-sm p-6 max-md:m-6 border border-primary/30">
+        <div className="flex flex-col items-center justify-center">
+          <div className="w-full py-6 text-center">
+            <h1 className="text-3xl font-bold ">
+              <span className="text-primary">Admin</span>Login
+            </h1>
+            <p className="font-light">
+              Enter your credentials to access the admin panel
+            </p>
+          </div>
+          <form
+            onSubmit={handleSubmit}
+            className="mt-6 w-full sm:max-w-md text-gray-600"
+          >
+            <div className="flex flex-col">
+              <label>Email</label>
+              <input
+                type="email"
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter Your Email"
+                className="border-b-2 border-gray-300 p-2 outline-none mb-6 "
+              />
+            </div>
+            <div className="flex flex-col relative">
+              <label>Password</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                placeholder="Enter Your Password"
+                className="border-b-2 border-gray-300 p-2 outline-none mb-6 "
+              />
+
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-7 text-sm font-medium text-primary cursor-pointer"
+              >
+                {showPassword ? <FiEyeOff  size={20}/> : <FiEye size={20} />}
+              </button>
+            </div>
+            <button
+              type="submit"
+              className="w-full py-3 font-extrabold bg-primary text-white rounded cursor-pointer hover:bg-primary/90 transition-all"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
