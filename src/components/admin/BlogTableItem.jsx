@@ -4,7 +4,7 @@ const BlogTableItem = ({ blog, fetchBlog, index }) => {
   const { title, createdAt } = blog;
   const BlogDate = new Date(createdAt);
   return (
-    <tr className="border-y border-gray-300">
+    <tr className="border-y border-pink-400">
       {/* Index */}
       <td className="px-2 py-4">{index}</td>
       {/* Title */}
@@ -19,6 +19,7 @@ const BlogTableItem = ({ blog, fetchBlog, index }) => {
           {blog.isPublished ? "Published" : "Unpublished"}
         </p>
       </td>
+        {/* Actions */}
       <td className="px-2 py-4 flex text-sm gap-3">
         <button className="border px-2 py-0.5 mt-1 rounded cursor-pointer">
           {blog.isPublished ? "Unpublish" : "Publish"}
@@ -29,7 +30,6 @@ const BlogTableItem = ({ blog, fetchBlog, index }) => {
             alt=""
           />
       </td>
-      {/* Actions */}
     </tr>
   );
 };
