@@ -32,7 +32,7 @@ const Comment = () => {
           </button>
         </div>
       </div>
-      <div className="relative h-4/5 max-w-3xl overflow-x-auto scrollbar-none rounded-lg bg-white shadow ">
+      <div className="relative h-4/5 max-w-3xl overflow-x-auto scrollbar-none rounded-lg bg-white shadow mt-5">
           <table className="w-full text-sm text-gray-500">
             <thead className="text-sm text-gray-700 text-left uppercase">
               <tr>
