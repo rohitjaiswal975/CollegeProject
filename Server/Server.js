@@ -3,6 +3,7 @@ import "dotenv/config";
 import cors from "cors";
 import connectDb from "./Configs/db.js";
 import adminRouter from "./routes/adminRoutes.js";
+import blogRoute from "./routes/blogRoute.js";
 
 const app = express();
 
@@ -13,6 +14,7 @@ await connectDb();
 app.use(cors());
 app.use(express.json());
 app.use("/api/admin", adminRouter);
+app.use("/api/blog", blogRoute);
 
 app.get("/", (req, res) => {
   res.send("Api is working");
