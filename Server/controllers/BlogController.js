@@ -45,7 +45,7 @@ export const addBlog = async (req, res) => {
 
     await Blog.create({
       title,
-      subTitle,
+      subtitle,
       description,
       category,
       isPublished,
