@@ -1,6 +1,9 @@
 import { assets } from "../assets/assets";
+import { useAppContext } from "../context/AppContex";
 
 const Header = () => {
+  const { input, setInput } = useAppContext();
+  
   return (
     <header className="mx-8 sm:mx-16 xl:mx-24 relative">
       <div className="text-center mt-20 mb-8">
@@ -18,9 +21,14 @@ const Header = () => {
           starts right here.
         </p>
 
-        <form className="flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-300 bg-white rounded overflow-hiddden">
+        <form
+          
+          className="flex justify-between max-w-lg max-sm:scale-75 mx-auto border border-gray-300 bg-white rounded overflow-hiddden"
+        >
           <input
             type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
             placeholder="Search for blogs"
             required
             className="w-full pl-4 outline-none"

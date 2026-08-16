@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { assets, blog_data, comments_data } from "../assets/assets";
+import { assets } from "../assets/assets";
 import Navbar from "../components/Navbar";
 import Moment from "moment";
 import {
@@ -11,27 +11,59 @@ import {
 } from "react-icons/fa";
 import Footer from "../components/Footer";
 import Loading from "../components/Loading";
+import { useAppContext } from "../context/AppContex";
+import toast from "react-hot-toast";
 
 const Blog = () => {
   const { id } = useParams();
 
+  const { axios } = useAppContext();
+
   const [data, setData] = useState(null);
   const [comments, setcomments] = useState([]);
   const [name, setName] = useState("");
-  const [comment, setComment] = useState("");
+  const [content, setContent] = useState("");
 
   const fetchBlogData = async () => {
-    const data = blog_data.find((item) => item._id === id);
-    setData(data);
+    try {
+      const { data } = await axios.get(`/api/blog/${id}`);
+      data.success ? setData(data.blog) : toast.error(data.message);
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
-  const fetchComments = () => {
-    setcomments(comments_data);
+  const fetchComments = async () => {
+    try {
+      const { data } = await axios.post("/api/blog/comments", { blogid: id });
+      if (data.success) {
+        setcomments(data.comments);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   const addcomment = async (e) => {
     e.preventDefault();
-    console.log({ name, comment });
+    try {
+      const { data } = await axios.post("/api/blog/add-comment", {
+        blog: id,
+        name,
+        content,
+      });
+      if (data.success) {
+        toast.success(data.message);
+        setName("");
+        setContent("");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   useEffect(() => {
@@ -118,8 +150,8 @@ const Blog = () => {
               className="w-full p-2 border border-gray-400 rounded outline-none"
               placeholder="Comments"
               required
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
             />
             <button
               type="submit"

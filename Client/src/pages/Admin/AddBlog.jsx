@@ -1,21 +1,56 @@
 import { useEffect, useRef, useState } from "react";
 import { assets, blogCategories } from "../../assets/assets";
 import Quill from "quill";
+import { useAppContext } from "../../context/AppContex";
+import toast from "react-hot-toast";
 
 const AddBlog = () => {
   const editorRef = useRef(null);
   const quillRef = useRef(null);
+  const { axios } = useAppContext();
 
   const [image, setImage] = useState(false);
   const [title, setTile] = useState("");
-  const [subTiltle, setSubTitle] = useState("");
-  const [category, setCategory] = useState("StartUp");
-  const [isPublised, setIsPublised] = useState(false);
+  const [subtitle, setSubTitle] = useState("");
+  const [category, setCategory] = useState("Startup");
+  const [isPublished, setIsPublished] = useState(false);
+
+  const [isAdding, setIsAdding] = useState(false);
 
   const generateContent = async () => {};
 
-  const onSubmitHandeler = (e) => {
-    e.prventDefault();
+  const onSubmitHandeler = async (e) => {
+    try {
+      e.preventDefault();
+      setIsAdding(true);
+      const blog = {
+        title,
+        subtitle,
+        description: quillRef.current.root.innerHTML,
+        isPublished,
+        category,
+      };
+
+      const formData = new FormData();
+      formData.append("blog", JSON.stringify(blog));
+      formData.append("image", image);
+
+      const { data } = await axios.post("/api/blog/add", formData);
+      if (data.success) {
+        toast.success(data.message);
+        setTile("")
+        setSubTitle("")
+        setImage(false)
+        quillRef.current.root.innerHTML = ""
+        setCategory("Startup")
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setIsAdding(false)
+    }
   };
 
   useEffect(() => {
@@ -62,7 +97,7 @@ const AddBlog = () => {
           type="text"
           placeholder="Type Here"
           required
-          value={subTiltle}
+          value={subtitle}
           onChange={(e) => setSubTitle(e.target.value)}
           className="w-full max-w-lg mt-2 p-2 border border-gray-400 outline-none rounded"
         />
@@ -96,16 +131,17 @@ const AddBlog = () => {
           <p className="font-extrabold text-black ">Publish Now</p>
           <input
             type="checkbox"
-            checked={isPublised}
+            checked={isPublished}
             className="scale-125 cursor-pointer accent-green-600 "
-            onChange={(e) => setIsPublised(e.target.checked)}
+            onChange={(e) => setIsPublished(e.target.checked)}
           />
         </div>
         <button
+          disabled={isAdding}
           type="submit"
           className="mt-8 w-40 h-10 bg-primary text-white rounded cursor-pointer text-sm"
         >
-          Add Blog
+          {isAdding ? "Adding...." : "Add Blog"}
         </button>
       </div>
     </form>
