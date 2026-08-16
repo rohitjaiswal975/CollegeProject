@@ -22,6 +22,6 @@ blogRoute.post("/toggle-publish", auth, togglePublish);
 
 // Comment route
 blogRoute.post("/add-comment", addComment);
-blogRoute.get("/comments", getBlogComment);
+blogRoute.post("/comments", getBlogComment);  
 
 export default blogRoute;
