@@ -2,7 +2,7 @@ import fs from "fs";
 import imageKit from "../Configs/imagekit.js";
 import Blog from "../models/Blog.js";
 import Comment from "../models/comment.js";
-import interaction from "../Configs/Gemini.js";
+import interaction from "../Configs/gemini.js";
 
 // Add blog
 export const addBlog = async (req, res) => {
