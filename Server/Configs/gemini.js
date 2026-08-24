@@ -5,12 +5,17 @@ const ai = new GoogleGenAI({
 });
 
 const interaction = async (prompt) => {
-  const response = await ai.interactions.create({
-    model: "gemini-3.7-flash",
-    input: prompt,
-  });
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-3.6-flash",
+      contents: prompt,
+    });
 
-  return response.output_text;
+    return response.text;
+  } catch (error) {
+    console.error("Gemini API Error:", error);
+    throw error;
+  }
 };
 
 export default interaction;

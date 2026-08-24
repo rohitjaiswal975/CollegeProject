@@ -88,8 +88,8 @@ export const deleteBlogByID = async (req, res) => {
     await Blog.findByIdAndDelete(id);
 
     // Delete all comment merge with blog
-    await Comment.deleteMany({blog : id}) 
-    
+    await Comment.deleteMany({ blog: id });
+
     res.json({ success: true, message: "deleted succesfully" });
   } catch (error) {
     res.json({ success: false, message: error.message });
@@ -138,13 +138,31 @@ export const getBlogComment = async (req, res) => {
 
 // Gemini Controller
 
-export const genrateContent = async (req,res) => {
+export const genrateContent = async (req, res) => {
   try {
-    const {prompt} = req.body
-    const content = await interaction(prompt + "Generate a blog content for this topic in simple text format")
-    res.json({success:true , content})
-  } catch (error) {
-    res.json({success:false , message:error.message})
-  }
-}
+    const { prompt } = req.body;
 
+    if (!prompt) {
+      return res.status(400).json({
+        success: false,
+        message: "Prompt is required",
+      });
+    }
+
+    const content = await interaction(
+      `${prompt}. Generate a blog content for this topic in simple text format.`,
+    );
+
+    res.json({
+      success: true,
+      content,
+    });
+  } catch (error) {
+    console.error("Generate content error:", error);
+
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
