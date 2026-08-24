@@ -9,8 +9,8 @@ const Dashboard = () => {
 
   const [dashboardData, setDashboardData] = useState({
     blogs: 0,
-    comments: 0,
-    drafts: 0,
+    comment: 0,
+    draft: 0,
     recentBlog: [],
   });
 
@@ -50,7 +50,7 @@ const Dashboard = () => {
           <img src={assets.dashboard_icon_2} alt="" />
           <div>
             <p className="text-xl font-semibold text-gray-600">
-              {dashboardData.comments}
+              {dashboardData.comment}
             </p>
             <p className="font-light text-gray-600">Comments</p>
           </div>
@@ -60,7 +60,7 @@ const Dashboard = () => {
           <img src={assets.dashboard_icon_3} alt="" />
           <div>
             <p className="text-xl font-semibold text-gray-600">
-              {dashboardData.drafts}
+              {dashboardData.draft}
             </p>
             <p className="font-light text-gray-600">Drafts</p>
           </div>
