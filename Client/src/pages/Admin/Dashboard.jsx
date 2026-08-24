@@ -17,7 +17,6 @@ const Dashboard = () => {
   const fetchDashboard = async () => {
     try {
       const { data } = await axios.get("/api/admin/dashboard");
-      console.log(data)
       if (data.success) {
         setDashboardData(data.dashboard);
       } else {
