@@ -10,7 +10,7 @@ import {
   togglePublish,
 } from "../controllers/BlogController.js";
 import upload from "../middleware/multer.js";
-import auth from "../middleware/Auth.js";
+import auth from "../middleware/auth.js";
 
 const blogRoute = express.Router();
 
