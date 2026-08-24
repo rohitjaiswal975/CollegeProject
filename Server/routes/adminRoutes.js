@@ -7,7 +7,7 @@ import {
   getAllComments,
   getDashboard,
 } from "../controllers/adminController.js";
-import auth from "../middleware/Auth.js";
+import auth from "../middleware/auth.js";
 
 const adminRouter = express.Router();
 
