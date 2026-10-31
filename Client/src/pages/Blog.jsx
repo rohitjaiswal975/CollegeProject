@@ -24,6 +24,9 @@ const Blog = () => {
   const [name, setName] = useState("");
   const [content, setContent] = useState("");
 
+  const shareUrl = window.location.href;
+  const shareText = `Check out this article: ${data?.title}`;
+
   const fetchBlogData = async () => {
     try {
       const { data } = await axios.get(`/api/blog/${id}`);
@@ -66,6 +69,54 @@ const Blog = () => {
     }
   };
 
+  // Share Article Details
+
+  const shareWhatsApp = () => {
+    window.open(
+      `https://api.whatsapp.com/send?text=${encodeURIComponent(
+        shareText + " " + shareUrl,
+      )}`,
+      "_blank",
+    );
+  };
+
+  const shareFacebook = () => {
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+        shareUrl,
+      )}`,
+      "_blank",
+    );
+  };
+
+  const shareTwitter = () => {
+    window.open(
+      `https://twitter.com/intent/tweet?text=${encodeURIComponent(
+        shareText,
+      )}&url=${encodeURIComponent(shareUrl)}`,
+      "_blank",
+    );
+  };
+
+  const shareInstagram = async () => {
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: data?.title,
+          text: shareText,
+          url: shareUrl,
+        });
+      } else {
+        await navigator.clipboard.writeText(shareUrl);
+        toast.success("Article link copied! Share it on Instagram.");
+      }
+    } catch (error) {
+      if (error.name !== "AbortError") {
+        toast.error("Unable to share article");
+      }
+    }
+  };
+
   useEffect(() => {
     (fetchBlogData(), fetchComments());
   }, []);
@@ -89,7 +140,7 @@ const Blog = () => {
         <h1 className="text-2xl sm:text-5xl font-semibold max-w-2xl mx-auto text-gray-800">
           {data.title}
         </h1>
-        <h2 className="my-5 max-w-lg truncate mx-auto">{data.subTitle}</h2>
+        <h2 className="my-5 max-w-lg truncate mx-auto">{data.subtitle}</h2>
         <p className="inline-block py-1 px-4 rounded-full mb-6 border text-sm border-primary/35 bg-primary/5 font-medium text-primary">
           Michael Brown
         </p>
@@ -163,46 +214,48 @@ const Blog = () => {
         </div>
 
         {/* Share Button */}
+        {/* Share Button */}
         <div className="my-24 max-w-3xl mx-auto">
           <p className="font-extrabold my-4">
             Share this article on social media
           </p>
+
           <div className="flex gap-3">
-            <a
-              href="https://wa.me/1234567890"
-              target="_blank"
-              rel="noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 text-white hover:scale-110"
+            {/* WhatsApp */}
+            <button
+              onClick={shareWhatsApp}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-green-500 text-white hover:scale-110 transition-all cursor-pointer"
+              title="Share on WhatsApp"
             >
               <FaWhatsapp size={20} />
-            </a>
+            </button>
 
-            <a
-              href="https://facebook.com"
-              target="_blank"
-              rel="noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white hover:scale-110"
+            {/* Facebook */}
+            <button
+              onClick={shareFacebook}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-blue-600 text-white hover:scale-110 transition-all cursor-pointer"
+              title="Share on Facebook"
             >
               <FaFacebookF size={20} />
-            </a>
+            </button>
 
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 text-white hover:scale-110"
+            {/* Twitter */}
+            <button
+              onClick={shareTwitter}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-sky-500 text-white hover:scale-110 transition-all cursor-pointer"
+              title="Share on Twitter"
             >
               <FaTwitter size={20} />
-            </a>
+            </button>
 
-            <a
-              href="https://instagram.com"
-              target="_blank"
-              rel="noreferrer"
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-pink-500 text-white hover:scale-110"
+            {/* Instagram */}
+            <button
+              onClick={shareInstagram}
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-pink-500 text-white hover:scale-110 transition-all cursor-pointer"
+              title="Share on Instagram"
             >
               <FaInstagram size={20} />
-            </a>
+            </button>
           </div>
         </div>
       </div>
